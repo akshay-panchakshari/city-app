@@ -16,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.city.app.model.City;
@@ -46,6 +48,11 @@ public class CityService {
 	    } catch (IOException e) {
 	    	logger.error("Exception occured while loading initial data into database",e);
 	    }
+	}
+	
+	
+	public Page<City> getCities(String name , int page,int size){
+		return repo.findByNameContaining(name, PageRequest.of(page, size));
 	}
 	
 	private void loadData(List<City>  intialData) {
