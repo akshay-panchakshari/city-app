@@ -52,7 +52,7 @@ public class CityService {
 	
 	
 	public Page<City> getCities(String name , int page,int size){
-		return repo.findByNameContaining(name, PageRequest.of(page, size));
+		return repo.findByNameContainingIgnoreCase(name, PageRequest.of(page, size));
 	}
 	
 	private void loadData(List<City>  intialData) {
