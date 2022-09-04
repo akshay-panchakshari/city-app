@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,5 +28,12 @@ public class CityController {
 		
 		Page<City> cities = cityService.getCities(name.orElse(""), page.orElse(0), size.orElse(10));
 		return new ResponseEntity<>(cities, HttpStatus.OK);
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@PutMapping("/api/city/{id}")
+	public ResponseEntity<City> updateCity(@RequestParam City city,@PathVariable Long id){
+		City updatedCity = cityService.updateCity(city,id);
+		return ResponseEntity.ok(updatedCity);
 	}
 }

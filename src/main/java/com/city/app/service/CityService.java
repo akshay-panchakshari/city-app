@@ -11,6 +11,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityNotFoundException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +54,14 @@ public class CityService {
 	
 	public Page<City> getCities(String name , int page,int size){
 		return repo.findByNameContainingIgnoreCase(name, PageRequest.of(page, size));
+	}
+	
+	public City updateCity(City city,Long id){
+		 City existingCity = repo.findById(id).orElseThrow(()->  new EntityNotFoundException("City does not exists with id:"+ id));
+		 existingCity.setName(city.getName());
+		 existingCity.setPhoto(city.getPhoto());
+		 City updatedCity = repo.save(city);
+		 return updatedCity;
 	}
 	
 	private void loadData(List<City>  intialData) {
