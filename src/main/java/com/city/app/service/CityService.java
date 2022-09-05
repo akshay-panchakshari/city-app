@@ -60,7 +60,7 @@ public class CityService {
 		 City existingCity = repo.findById(id).orElseThrow(()->  new EntityNotFoundException("City does not exists with id:"+ id));
 		 existingCity.setName(city.getName());
 		 existingCity.setPhoto(city.getPhoto());
-		 City updatedCity = repo.save(city);
+		 City updatedCity = repo.save(existingCity);
 		 return updatedCity;
 	}
 	

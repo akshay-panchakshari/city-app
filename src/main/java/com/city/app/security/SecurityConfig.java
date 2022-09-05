@@ -40,7 +40,7 @@ public class SecurityConfig {
 	
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.debug(securityDebug).ignoring().antMatchers("/h2-console/**");
+		return (web) -> web.debug(securityDebug).ignoring().antMatchers("/h2-console/**","/api/login");
 	}
 
 	@Bean
@@ -49,8 +49,8 @@ public class SecurityConfig {
         
         manager.createUser(User.withDefaultPasswordEncoder()
         		.username("user")
-        		.password("password")
-        		 .roles("USER")
+        		.password("user")
+        		 .roles("ALLOW_EDIT")
         		 .build());
         /*
         manager.createUser(User.withUsername("user")
