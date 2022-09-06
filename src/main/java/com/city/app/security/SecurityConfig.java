@@ -1,6 +1,9 @@
 
 package com.city.app.security;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +14,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -45,22 +50,24 @@ public class SecurityConfig {
 
 	@Bean
 	public UserDetailsService userDetailsService() {
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+        List<UserDetails> userDetailsList = new ArrayList<>();
+        UserDetails admin = User.withUsername("admin")
+		.password("adminpass")
+		.roles("ALLOW_EDIT")
+		.build();
         
-        manager.createUser(User.withDefaultPasswordEncoder()
-        		.username("user")
-        		.password("user")
-        		 .roles("ALLOW_EDIT")
-        		 .build());
-        /*
-        manager.createUser(User.withUsername("user")
-          .password(bCryptPasswordEncoder.encode("userPass"))
-          .roles("USER")
-          .build());
-        manager.createUser(User.withUsername("admin")
-          .password(bCryptPasswordEncoder.encode("adminPass"))
-          .roles("ADMIN", "USER")
-          .build());*/
-        return manager;
+        UserDetails user = User.withUsername("user")
+        		.password("userpass")
+        		.roles("READ_ONLY")
+        		.build();
+          
+        userDetailsList.add(admin);
+        userDetailsList.add(user);
+        return new InMemoryUserDetailsManager(userDetailsList);
+       
+	}
+	@Bean
+	public PasswordEncoder passwordEncoder () {
+		return NoOpPasswordEncoder.getInstance();
 	}
 }

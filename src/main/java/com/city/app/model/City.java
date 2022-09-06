@@ -14,6 +14,13 @@ public class City {
 	private String name;
 	@Lob 
 	private String photo;
+	
+	public City(Long id, String name, String photo) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.photo = photo;
+	}
 	public City(){
 		
 	}

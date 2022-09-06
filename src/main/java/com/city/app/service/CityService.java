@@ -71,7 +71,7 @@ public class CityService {
 	}
 	
 	private Function<String, City> mapToItem = (line) -> {
-		String[] p = line.split(COMMA);// a CSV has comma separated lines
+		String[] p = line.split(COMMA);
 		City item = new City();
 		item.setName(p[1]);
 		item.setPhoto(p[2]);

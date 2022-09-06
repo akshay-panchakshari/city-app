@@ -1,14 +1,17 @@
 package com.city.app.model;
 
+import java.util.List;
+
 public class User {
 	String username;
 	String password;
-	String role;
+	List<String> role;
 	
 	public User() {
-		// TODO Auto-generated constructor stub
 	}
-	public User(String username, String password, String role) {
+	
+	
+	public User(String username, String password, List<String> role) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -26,12 +29,15 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getRole() {
+
+	public List<String> getRole() {
 		return role;
 	}
-	public void setRole(String role) {
+
+	public void setRole(List<String> role) {
 		this.role = role;
 	}
+	
 	
 	
 }
